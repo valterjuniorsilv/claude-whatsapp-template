@@ -1,0 +1,32 @@
+name: Validate Template
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check Node syntax of nodes
+        run: |
+          for f in nodes/*.js; do
+            node --check "$f" || exit 1
+          done
+          echo "All node scripts valid syntax."
+      - name: Validate workflows JSON
+        run: |
+          for f in workflows/*.json; do
+            python3 -c "import json; json.load(open('$f'))" || exit 1
+          done
+          echo "All workflows valid JSON."
+      - name: Validate migrations SQL exist
+        run: |
+          ls migrations/*.sql > /dev/null && echo "Migrations present."

@@ -1,5 +1,7 @@
 # Claude WhatsApp Template
 
+[![CI](https://github.com/valterjuniorsilv/claude-whatsapp-template/actions/workflows/validate.yml/badge.svg)](https://github.com/valterjuniorsilv/claude-whatsapp-template/actions) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Release](https://img.shields.io/github/v/release/valterjuniorsilv/claude-whatsapp-template)](https://github.com/valterjuniorsilv/claude-whatsapp-template/releases)
+
 > Production-tested boilerplate for building a WhatsApp customer service bot powered by **Claude (Anthropic) + N8N + Evolution API**. Battle-tested in production at [NodusHub](https://nodushub.com.br) serving dental clinics in Brazil.
 
 This is NOT a hello-world. It's the architectural pattern with all the production guardrails that took 3 months of bugs to figure out — message debouncing, protected contacts, error fallback, prompt caching, chunk-by-chunk delivery.
