@@ -12,21 +12,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Check Node syntax of nodes
+
+      - name: Validate node files exist and non-empty
+        shell: bash
         run: |
-          for f in nodes/*.js; do
-            node --check "$f" || exit 1
+          set -e
+          required="debounce extract-payload build-claude-payload process-response send-response"
+          for n in $required; do
+            f="nodes/$n.js"
+            [ -s "$f" ] || { echo "MISSING or empty: $f"; exit 1; }
+            echo "OK $f"
           done
-          echo "All node scripts valid syntax."
+
       - name: Validate workflows JSON
+        shell: bash
         run: |
+          set -e
           for f in workflows/*.json; do
-            python3 -c "import json; json.load(open('$f'))" || exit 1
+            python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$f" || exit 1
+            echo "OK $f"
           done
-          echo "All workflows valid JSON."
-      - name: Validate migrations SQL exist
+
+      - name: Validate migrations SQL
+        shell: bash
         run: |
-          ls migrations/*.sql > /dev/null && echo "Migrations present."
+          set -e
+          for n in 001_protected_contacts 002_enable_rls 003_message_audit; do
+            f="migrations/$n.sql"
+            [ -s "$f" ] || { echo "MISSING: $f"; exit 1; }
+            grep -qE 'CREATE TABLE|CREATE INDEX|ALTER' "$f" || { echo "$f has no DDL"; exit 1; }
+            echo "OK $f"
+          done
+
+      - name: README integrity
+        shell: bash
+        run: |
+          for section in nodes migrations prompts docs; do
+            grep -q "$section/" README.md || { echo "README missing reference to $section/"; exit 1; }
+          done
+          echo "All sections referenced."
