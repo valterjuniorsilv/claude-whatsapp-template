@@ -1,0 +1,26 @@
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+bin/
+dist/
+vendor/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Local config
+local/
+tmp/
