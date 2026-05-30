@@ -135,7 +135,7 @@ MIT — see [LICENSE](./LICENSE).
 Companion repos:
 
 - [claude-skills](https://github.com/valterjuniorsilv/claude-skills) — Claude Code skills used during development
-- [nodus-agents](https://github.com/valterjuniorsilv/nodus-agents) — agency-style multi-agent setup
+- [agency-as-agents](https://github.com/valterjuniorsilv/agency-as-agents) — agency-style multi-agent setup
 - [antigravity-lab](https://github.com/valterjuniorsilv/antigravity-lab) — Go backend reference (Clean Arch + DDD + CQRS)
 
 > "Na area, não nas arquibancadas."
